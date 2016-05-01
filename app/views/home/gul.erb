@@ -1,0 +1,21 @@
+
+<div class= "container" style ="margin-top :40px">
+	<h1>글</h1>
+	<%= @one_post.title %> <br>
+	<hr>
+	<%= @one_post.content %>
+	<hr>
+	<% @one_post.replies.each do |t| %>
+		<%= t.content%> <br>
+	<%end%>
+	<hr>
+
+	<form action="/home/reply_write" method="POST">
+
+	<input type="hidden" value ="<%= @one_post.id%>" name = "post_id">
+	<textarea class="form-control" rows="1" name="content" placeholder="리플"></textarea>
+  	<button type="submit" class="btn btn-default">리플</button>
+	</form>
+
+</div>	
+<a href="/home/index"><button type="button" class="btn btn-primary">홈으로</button></a><br>

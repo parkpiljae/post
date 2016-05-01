@@ -1,0 +1,9 @@
+<div class= "container">
+<a href="/home/write_post"><button type="button" class="btn btn-primary">글쓰기</button></a><br>
+<% @posts.each do |t|%>
+	<a href="gul/<%= t.id %>"><%= t.title %></a> <a href="update_view/<%= t.id%>">[수정]</a> <a href="destroy/<%= t.id%>">[삭제]</a><br>
+
+<% end %>
+<br>
+
+</div>
