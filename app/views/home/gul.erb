@@ -1,21 +1,39 @@
 
 <div class= "container" style ="margin-top :40px">
 	<h1>글</h1>
-	<%= @one_post.title %> <br>
+	제목 :<%= @one_post.title %> <br>
 	<hr>
-	<%= @one_post.content %>
+	내용 :<%= @one_post.content %>
 	<hr>
-	<% @one_post.replies.each do |t| %>
-		<%= t.content%> <br>
-	<%end%>
+	-리플-<br>
+	<ul id="ulist">
+		<% @one_post.replies.each do |t| %>
+			<li><%= t.content%></li>
+		<%end%>
+	</ul>
+	
 	<hr>
-
-	<form action="/home/reply_write" method="POST">
-
-	<input type="hidden" value ="<%= @one_post.id%>" name = "post_id">
-	<textarea class="form-control" rows="1" name="content" placeholder="리플"></textarea>
-  	<button type="submit" class="btn btn-default">리플</button>
-	</form>
-
+		<textarea class="form-control text_area" rows="1" name="content" id = "reply_content"></textarea>
+	  	<button value = "<%= @one_post.id%>" type="submit" class="btn btn-default reply">리플</button>
+	
+	<a href="/home/index"><button type="button" class="btn btn-primary">홈으로</button></a><br>
 </div>	
-<a href="/home/index"><button type="button" class="btn btn-primary">홈으로</button></a><br>
+
+<script>
+
+
+$('.reply').click(function(){
+	post_id = this.value;
+	reply_content = $('#reply_content').val();
+	$.ajax({
+	  method: "POST",
+	  url: "/home/reply_write",
+	  data: { content: reply_content, post_id : post_id}
+	})
+	  .done(function() {
+	    $( "#ulist" ).append( "<li>"+reply_content+"</li>" );
+	    $('textarea').val('')
+	  });
+	 })
+
+</script>
